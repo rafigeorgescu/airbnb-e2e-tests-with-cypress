@@ -18,6 +18,9 @@ describe("Search criteria", () => {
         cy.intercept("/api/v2/user_markets*").as("getUserMarkets");
         homePage.load();
         cy.wait("@getUserMarkets").its("response.statusCode").should("equal", 200);
+        cy.get("@getUserMarkets").then((interception) => {
+            console.log(interception.response.body);
+        });
         searchComponent.checkSearchComponentIsDisplayed();
         searchComponent.addDestination(destination);
         searchComponent.addCheckInDate(checkInDate);

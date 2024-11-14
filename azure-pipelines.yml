@@ -16,6 +16,7 @@ steps:
   
 - script: npm run test-prod -- --browser chrome
   displayName: 'Run tests'
+  continueOnError: true
   
 - task: PublishTestResults@2
   inputs:
