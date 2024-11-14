@@ -1,26 +1,45 @@
+parameters:
+  - name: env
+    displayName: 'Environment'
+    default: prod
+    type: string
+    values:
+      - dev
+      - prod
+
+  - name: browser
+    displayName: 'Browser'
+    default: chrome
+    type: string
+    values:
+      - chrome
+      - firefox
+      - edge
+      - electron
+
 trigger:
-- main
+  - main
 
 pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSource: 'spec'
-    versionSpec: '20.x'
-  displayName: 'Install Node.js'
+  - task: NodeTool@0
+    inputs:
+      versionSource: 'spec'
+      versionSpec: '20.x'
+    displayName: 'Install Node.js'
 
-- script: npm install
-  displayName: 'Install dependencies'
-  
-- script: npm run test-prod -- --browser chrome
-  displayName: 'Run tests'
-  continueOnError: true
-  
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/cypress/results/junitreport.xml'
-  displayName: 'Publish report'
+  - script: npm install
+    displayName: 'Install dependencies'
+
+  - script: npm run test-${{parameters.env}} -- --browser ${{parameters.browser}}
+    displayName: 'Run tests'
+    continueOnError: true
+
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '**/cypress/results/junitreport.xml'
+    displayName: 'Publish report'
   
