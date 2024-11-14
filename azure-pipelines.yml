@@ -41,14 +41,6 @@ steps:
     displayName: 'Run tests'
     continueOnError: true
 
-  - task: PublishBuildArtifacts@1
-    inputs:
-      PathtoPublish: 'cypress/results/output.txt'
-      ArtifactName: 'output'
-      publishLocation: 'Container'
-    displayName: 'Publish artifacts'
-    continueOnError: true
-
   - task: PublishTestResults@2
     inputs:
       testResultsFormat: 'JUnit'

@@ -15,36 +15,9 @@ describe("Search criteria", () => {
     };
 
     it("Verify that the results match the search criteria", () => {
-        cy.intercept("/api/v2/user_markets*", (req) => {
-            req.reply((res) => {
-                res.body = {
-                    market: "Dublin",
-                    state_code: "",
-                    country_code: "IE",
-                    satori_region_id: -1,
-                    version: "1.2.0",
-                    user_markets: [
-                        {
-                            market: "Dublin",
-                            region_id: -1,
-                            country_code: "IE",
-                            state_code: "",
-                            satori_version: "1.2.0",
-                            enable_satori_experiment: true,
-                            config_token: "EhIiQjIiMhISFQIiEiISEiJSQjUyFQYVXAqOAQUA",
-                            locale: "en-IE",
-                            autocomplete_endpoint: "/api/v2/autocompletes-personalized",
-                            satori_parameters: "EhIiQjIiMhISFQIiEiISEiJSQjUyFQYVXAqOAQUA",
-                        },
-                    ],
-                };
-            });
-        }).as("getUserMarkets");
+        cy.intercept("/api/v2/user_markets*").as("getUserMarkets");
         homePage.load();
         cy.wait("@getUserMarkets").its("response.statusCode").should("equal", 200);
-        cy.get("@getUserMarkets").then((interception) => {
-            cy.writeFile("cypress/results/output.txt", interception);
-        });
         searchComponent.checkSearchComponentIsDisplayed();
         searchComponent.addDestination(destination);
         searchComponent.addCheckInDate(checkInDate);
