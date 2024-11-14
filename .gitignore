@@ -1,0 +1,10 @@
+/node_modules
+
+/.idea
+/.vscode
+/target
+
+cypress/downloads
+cypress/screenshots
+cypress/videos
+cypress/results
