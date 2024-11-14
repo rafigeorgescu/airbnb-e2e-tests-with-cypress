@@ -3,7 +3,6 @@ import { searchComponent } from "../support/pageObjects/components/searchCompone
 import { calculatePeriod, getFutureDate } from "../support/utils";
 import { propertyListingPage } from "../support/pageObjects/pages/propertyListingPage";
 import { propertyDetailsPage } from "../support/pageObjects/pages/propertyDetailsPage";
-import * as fs from "node:fs";
 
 describe("Search criteria", () => {
     const destination = "Rome, Italy";
