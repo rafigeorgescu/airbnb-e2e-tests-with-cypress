@@ -1,0 +1,6 @@
+{
+    "baseUrl": "https://www.airbnb.com",
+    "env": {
+        "name": "dev"
+    }
+}
