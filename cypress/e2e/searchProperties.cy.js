@@ -3,6 +3,7 @@ import { searchComponent } from "../support/pageObjects/components/searchCompone
 import { calculatePeriod, getFutureDate } from "../support/utils";
 import { propertyListingPage } from "../support/pageObjects/pages/propertyListingPage";
 import { propertyDetailsPage } from "../support/pageObjects/pages/propertyDetailsPage";
+import * as fs from "node:fs";
 
 describe("Search criteria", () => {
     const destination = "Rome, Italy";
@@ -19,7 +20,7 @@ describe("Search criteria", () => {
         homePage.load();
         cy.wait("@getUserMarkets").its("response.statusCode").should("equal", 200);
         cy.get("@getUserMarkets").then((interception) => {
-            console.log(interception.response.body);
+            cy.writeFile("cypress/results/output.txt", interception.response.body);
         });
         searchComponent.checkSearchComponentIsDisplayed();
         searchComponent.addDestination(destination);

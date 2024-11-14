@@ -42,4 +42,15 @@ steps:
       testResultsFormat: 'JUnit'
       testResultsFiles: '**/cypress/results/junitreport.xml'
     displayName: 'Publish report'
+
+  - task: publishhtmlreport@1
+    inputs:
+      htmlType: 'genericHTML'
+      htmlPath: '**/cypress/results/index.html'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: 'cypress/results/output.txt'
+      ArtifactName: 'output'
+      publishLocation: 'Container'
   
