@@ -37,20 +37,21 @@ steps:
     displayName: 'Run tests'
     continueOnError: true
 
-  - task: PublishTestResults@2
-    inputs:
-      testResultsFormat: 'JUnit'
-      testResultsFiles: '**/cypress/results/junitreport.xml'
-    displayName: 'Publish report'
-
-  - task: publishhtmlreport@1
-    inputs:
-      htmlType: 'genericHTML'
-      htmlPath: '**/cypress/results/index.html'
-
   - task: PublishBuildArtifacts@1
     inputs:
       PathtoPublish: 'cypress/results/output.txt'
       ArtifactName: 'output'
       publishLocation: 'Container'
-  
+    displayName: 'Publish artifacts'
+    continueOnError: true
+
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '**/cypress/results/junitreport.xml'
+    displayName: 'Publish JUnit report'
+
+  - task: PublishHtmlReport@1
+    inputs:
+      reportDir: 'cypress/results/index.html'
+    displayName: 'Publish HTML report'
