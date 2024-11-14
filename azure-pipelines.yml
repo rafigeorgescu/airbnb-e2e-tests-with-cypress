@@ -23,6 +23,10 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  LANG: en_US.UTF-8
+  LC_ALL: en_US.UTF-8
+
 steps:
   - task: NodeTool@0
     inputs:
