@@ -25,10 +25,10 @@ describe("Search criteria", () => {
         searchComponent.checkCheckInDateIsCorrect(checkInDate);
         searchComponent.addCheckOutDate(checkOutDate);
         searchComponent.checkCheckOutDateIsCorrect(checkOutDate);
-        searchComponent.addGuests().then(() => {
-            searchComponent.selectAdultsNumber(guests.adults);
-            searchComponent.selectChildrenNumber(guests.children);
-        });
+        searchComponent.addGuests();
+        searchComponent.selectAdultsNumber(guests.adults);
+        searchComponent.selectChildrenNumber(guests.children);
+
         searchComponent.search();
         searchComponent.checkSearchCriteriaAreCorrect(destination, period, guests.adults + guests.children);
         propertyListingPage.checkPageIsDisplayed();

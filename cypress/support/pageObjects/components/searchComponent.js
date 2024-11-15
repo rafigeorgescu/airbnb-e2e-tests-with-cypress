@@ -109,26 +109,28 @@ class SearchComponent {
     }
 
     selectAdultsNumber(value) {
-        this.selectGuestsNumber(SELECTORS.ADULTS_STEPPER_COMPONENT, value);
+        this.selectGuestsNumber(SELECTORS.ADULTS_STEPPER_COMPONENT, 0, value);
     }
 
     selectChildrenNumber(value) {
-        this.selectGuestsNumber(SELECTORS.CHILDREN_STEPPER_COMPONENT, value);
+        this.selectGuestsNumber(SELECTORS.CHILDREN_STEPPER_COMPONENT, 0, value);
     }
 
-    selectGuestsNumber(selector, value) {
-        let count = 0;
+    selectGuestsNumber(selector, count, maxClicks) {
+        if (count >= maxClicks) return;
         cy.get(selector)
             .find(SELECTORS.INCREASE_VALUE_BUTTON)
             .then((element) => {
-                Cypress._.times(value, () => {
-                    cy.wrap(element)
-                        .click()
-                        .then(() => {
-                            count++;
-                            cy.get(selector).find(SELECTORS.GUESTS_VALUE).should("have.text", count);
-                        });
-                });
+                cy.wrap(element)
+                    .click()
+                    .then(() => {
+                        cy.get(selector)
+                            .find(SELECTORS.GUESTS_VALUE)
+                            .should("have.text", count + 1)
+                            .then(() => {
+                                this.selectGuestsNumber(selector, count + 1, maxClicks);
+                            });
+                    });
             });
     }
 
