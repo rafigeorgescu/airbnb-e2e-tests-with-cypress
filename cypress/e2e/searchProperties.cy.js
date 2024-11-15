@@ -25,9 +25,10 @@ describe("Search criteria", () => {
         searchComponent.checkCheckInDateIsCorrect(checkInDate);
         searchComponent.addCheckOutDate(checkOutDate);
         searchComponent.checkCheckOutDateIsCorrect(checkOutDate);
-        searchComponent.addGuests();
-        searchComponent.selectAdultsNumber(guests.adults);
-        searchComponent.selectChildrenNumber(guests.children);
+        searchComponent.addGuests().then(() => {
+            searchComponent.selectAdultsNumber(guests.adults);
+            searchComponent.selectChildrenNumber(guests.children);
+        });
         searchComponent.search();
         searchComponent.checkSearchCriteriaAreCorrect(destination, period, guests.adults + guests.children);
         propertyListingPage.checkPageIsDisplayed();
@@ -44,16 +45,19 @@ describe("Search criteria", () => {
     });
 
     it("Verify that the results and details page match the extra filters", () => {
+        //changed the date because Pool facility is not available for the available properties
+        const newCheckoutDate = getFutureDate("2", "week", checkInDate);
+        const newPeriod = calculatePeriod(checkInDate, newCheckoutDate);
         homePage.load();
         searchComponent.checkSearchComponentIsDisplayed();
         searchComponent.addDestination(destination);
         searchComponent.addCheckInDate(checkInDate);
-        searchComponent.addCheckOutDate(checkOutDate);
+        searchComponent.addCheckOutDate(newCheckoutDate);
         searchComponent.addGuests();
         searchComponent.selectAdultsNumber(guests.adults);
         searchComponent.selectChildrenNumber(guests.children);
         searchComponent.search();
-        searchComponent.checkSearchCriteriaAreCorrect(destination, period, guests.adults + guests.children);
+        searchComponent.checkSearchCriteriaAreCorrect(destination, newPeriod, guests.adults + guests.children);
         propertyListingPage.checkPageIsDisplayed();
         propertyListingPage.checkPropertiesAreDisplayed();
         filtersComponent.openFiltersModal();

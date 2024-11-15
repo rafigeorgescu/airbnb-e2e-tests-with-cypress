@@ -40,7 +40,7 @@ module.exports = defineConfig({
         requestTimeout: 15000,
         responseTimeout: 15000,
         video: true,
-        scrollBehavior: "center",
+        scrollBehavior: "bottom",
         reporter: "cypress-multi-reporters",
         reporterOptions: {
             reporterEnabled: "cypress-mochawesome-reporter, mocha-junit-reporter",

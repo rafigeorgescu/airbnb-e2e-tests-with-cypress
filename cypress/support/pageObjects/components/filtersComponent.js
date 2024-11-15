@@ -31,7 +31,7 @@ class FiltersComponent {
     }
 
     selectAmenity(amenity) {
-        cy.contains(SELECTORS.AMENITIES_OPTION, amenity).click().should("have.attr", "aria-pressed", "true");
+        cy.contains(SELECTORS.AMENITIES_OPTION, amenity).scrollIntoView().click().should("have.attr", "aria-pressed", "true");
     }
 
     applyFilters() {

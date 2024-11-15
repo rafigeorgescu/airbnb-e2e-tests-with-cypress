@@ -34,7 +34,7 @@ class SearchComponent {
     }
 
     getCheckInButton() {
-        return cy.get(SELECTORS.MAIN_COMPONENT).contains(SELECTORS.SEARCH_CATEGORY_BUTTON, i18n.CHECK_IN);
+        return cy.get(SELECTORS.MAIN_COMPONENT).contains(SELECTORS.SEARCH_CATEGORY_BUTTON, i18n.CHECK_IN).scrollIntoView();
     }
 
     addCheckInDate(date) {
@@ -72,11 +72,11 @@ class SearchComponent {
                 });
         }
         matchMonth(header);
-        return cy.contains(SELECTORS.MONTH_PANEL, header);
+        return cy.contains(SELECTORS.MONTH_PANEL, header).scrollIntoView();
     }
 
     getCheckOutButton() {
-        return cy.get(SELECTORS.MAIN_COMPONENT).contains(SELECTORS.SEARCH_CATEGORY_BUTTON, i18n.CHECK_OUT);
+        return cy.get(SELECTORS.MAIN_COMPONENT).contains(SELECTORS.SEARCH_CATEGORY_BUTTON, i18n.CHECK_OUT).scrollIntoView();
     }
 
     addCheckOutDate(date) {
@@ -96,7 +96,7 @@ class SearchComponent {
     }
 
     getGuestsButton() {
-        return cy.get(SELECTORS.MAIN_COMPONENT).contains(SELECTORS.SEARCH_CATEGORY_BUTTON, i18n.ADD_GUESTS);
+        return cy.get(SELECTORS.MAIN_COMPONENT).contains(SELECTORS.SEARCH_CATEGORY_BUTTON, i18n.ADD_GUESTS).scrollIntoView();
     }
 
     addGuests() {
@@ -122,9 +122,12 @@ class SearchComponent {
             .find(SELECTORS.INCREASE_VALUE_BUTTON)
             .then((element) => {
                 Cypress._.times(value, () => {
-                    cy.wrap(element).click();
-                    count++;
-                    cy.get(selector).find(SELECTORS.GUESTS_VALUE).should("have.text", count);
+                    cy.wrap(element)
+                        .click()
+                        .then(() => {
+                            count++;
+                            cy.get(selector).find(SELECTORS.GUESTS_VALUE).should("have.text", count);
+                        });
                 });
             });
     }
