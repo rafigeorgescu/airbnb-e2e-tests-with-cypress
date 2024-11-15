@@ -117,10 +117,10 @@ class SearchComponent {
     }
 
     selectGuestsNumber(selector, value) {
+        let count = 0;
         cy.get(selector)
             .find(SELECTORS.INCREASE_VALUE_BUTTON)
             .then((element) => {
-                let count = 0;
                 Cypress._.times(value, () => {
                     cy.wrap(element).click();
                     count++;
@@ -130,7 +130,9 @@ class SearchComponent {
     }
 
     search() {
+        cy.intercept("/api/v3/StaysSearch/*").as("getSearchResults");
         cy.get(SELECTORS.MAIN_COMPONENT).contains("button", i18n.SEARCH).click();
+        cy.wait("@getSearchResults").its("response.statusCode").should("equal", 200);
     }
 
     checkSearchCriteriaAreCorrect(destination, period, guestsNumber) {

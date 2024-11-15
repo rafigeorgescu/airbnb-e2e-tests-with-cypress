@@ -34,7 +34,7 @@ module.exports = defineConfig({
         watchForFileChanges: false,
         viewportWidth: 1920,
         viewportHeight: 1080,
-        defaultCommandTimeout: 10000,
+        defaultCommandTimeout: 15000,
         execTimeout: 30000,
         pageLoadTimeout: 30000,
         requestTimeout: 15000,
@@ -54,8 +54,9 @@ module.exports = defineConfig({
             mochaJunitReporterReporterOptions: {
                 mochaFile: "cypress/results/junit/results-[hash].xml",
             },
-            video: false,
+            video: true,
         },
         experimentalRunAllSpecs: true,
+        experimentalMemoryManagement: true,
     },
 });
